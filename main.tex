@@ -1,8 +1,15 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
 
-\title{CRLB for LTE PRS TOA}
-\author{Siddhant }
+\title{3GPP LTE : Cramer Rao Lower Bound on TOA}
+\author{Siddhant}
 \date{April 2020}
 
 \begin{document}
@@ -39,4 +46,9 @@ Finally, plug this approximated sum into Fisher Information sum to get the follo
 $$\mathbf{J}(\tau) = \frac{8\pi^2 \Delta F^2 N}{\sigma^2}\sum^{\frac{N}{2} - 1}_{k=-\frac{N}{2}}k^2 \approx \frac{8\pi^2 \Delta F^2 N}{\sigma^2} \frac{N^3}{12},$$
 We know that Bandwidth of OFDM is $\Delta F.N$, hence $(\Delta F . N)^2$ can be considered as Squared Bandwidth. Also We have considered $|S[k]|^2 = 1$, which will mean Pre-Correlation Signal Power is 1. If instead Pre-Correlation Signal Power was a constant $P$, then Post-Correlation signal power would have been $N.P$. And then the Fisher Information expression becomes :
 $$\mathbf{J}(\tau) = \frac{2\pi^2 (\Delta F.N)^2}{3}. \frac{N^2 P}{\sigma^2} = N. \frac{2\pi^2}{3} (\Delta F.N)^2 SNR_{corr}$$
+
+\section{CRLB : Expression}
+As, CRLB on uncertainty of the estimated parameter $\tau$ is lower bounded by reciprocal of Fisher Information, CRLB can be given by following:
+$$var(\hat{\tau}) \ge \frac{1}{\mathbf J(\tau)},$$
+$$or, var(\hat{\tau}) \ge \frac{3}{2N\pi^2}\frac{1}{(\Delta F.N)^2}.\frac{1}{SNR_{corr}}$$
 \end{document}
