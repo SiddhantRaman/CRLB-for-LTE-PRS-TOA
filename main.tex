@@ -1,0 +1,42 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{CRLB for LTE PRS TOA}
+\author{Siddhant }
+\date{April 2020}
+
+\begin{document}
+
+\maketitle
+
+\section{Derivation: Fisher Information}
+$s(t)$ is the OFDM wave being transmitted by Reference Cell. $\tau$ is the time delay and channel is assumed to be $1$. Received Samples can be given by the following :$$y[n] = s(nT_s - \tau) + z[n],$$where z[n] are iid AWGN noise samples with mean $0$ and variance $\sigma^2$.  
+Joint Conditional PDF of $\mathbf y|\tau$ can be given by the following:
+$$p(\mathbf y|\tau) = \frac{1}{(\pi \sigma^2)^N} .exp(-\frac{1}{\sigma^2}\sum^{N}_{n=1}(s(n T_s - \tau) - y[n])^2)$$
+
+And log likelihood will become :
+$$ln(p(\mathbf y|\tau)) = -N ln(\pi \sigma^2) -\frac{1}{\sigma^2}\sum^{N}_{n=1}(s(nT_s - \tau) - y[n])^2$$
+
+Fisher Information $\mathbf J(\tau)$ will then be given by:
+$$\mathbf{J}(\tau) = \mathbf E\{ - \mathbf{\frac{d^2}{d^2\tau}}ln((p(\mathbf y|\tau)) \}$$
+
+Simplify the above to get :
+$$\mathbf{J}(\tau) = \frac{2}{sigma^2}\sum^{N}_{n=1}\mathbf{\frac{d}{d\tau}}s(n T_s - \tau).\mathbf{\frac{d}{d\tau}}s^*(n T_s - \tau)$$
+Since, $s(t) = \frac{1}{\sqrt{N}}\sum^{\frac{N}{2} - 1}_{k=-\frac{N}{2}}S[k]e^{j2\pi k\Delta F t}$, where $\Delta F$ is subcarrier spacing of OFDM system. Hence, $s(n T_s - \tau) = \frac{1}{\sqrt{N}}\sum^{\frac{N}{2} - 1}_{k=-\frac{N}{2}}S[k]e^{j2\pi k\Delta F (n T_s - \tau)}$. Substitute this $s(n T_s - \tau)$ in the above equation to get : 
+$$\mathbf{J}(\tau) = \frac{2}{N.\sigma^2} \sum^{N}_{n=1}\{\frac{d}{d\tau}\sum^{\frac{N}{2} - 1}_{k=-\frac{N}{2}}S[k]e^{j2\pi k\Delta F (n T_s - \tau)}\}.\{\frac{d}{d\tau}\sum^{\frac{N}{2} - 1}_{l=-\frac{N}{2}}S[k]e^{j2\pi l\Delta F (n T_s - \tau)}\}$$
+
+After carrying out differentiation and taking all terms which are not running in the sum out of the summation, we get the following :
+$$\mathbf{J}(\tau) = \frac{2}{N\sigma^2}(-j2\pi \Delta F).(j2\pi \Delta F)\sum^{N}_{n=1} \{\sum^{\frac{N}{2} - 1}_{k=-\frac{N}{2}}k S[k]e^{j2\pi \Delta F k n T_s}.\sum^{\frac{N}{2} - 1}_{l=-\frac{N}{2}}l S*[l]e^{-j2\pi \Delta F l n T_s}\}$$
+
+Use orthogonality of Fourier Basis and assume $S[k] = 1$, to get the following:
+$$\mathbf{J}(\tau) = \frac{8\pi^2 \Delta F^2}{N\sigma^2} \sum^{N}_{n=1} \sum^{\frac{N}{2} - 1}_{k=-\frac{N}{2}}N k^2 = \frac{8\pi^2 \Delta F^2}{\sigma^2} \sum^{N}_{n=1} \sum^{\frac{N}{2} - 1}_{k=-\frac{N}{2}}k^2 = \frac{8\pi^2 \Delta F^2 N}{\sigma^2}\sum^{\frac{N}{2} - 1}_{k=-\frac{N}{2}}k^2$$
+
+Computing $\sum^{\frac{N}{2} - 1}_{k=-\frac{N}{2}}k^2$ by substituting $m=k+\frac{N}{2}$, gives the following :
+
+$$\sum^{N-1}_{m=0}(m-\frac{N}{2})^2 = \frac{N^3}{12} + \frac{N}{6} \approx \frac{N^3}{12}$$
+
+Finally, plug this approximated sum into Fisher Information sum to get the following :
+$$\mathbf{J}(\tau) = \frac{8\pi^2 \Delta F^2 N}{\sigma^2}\sum^{\frac{N}{2} - 1}_{k=-\frac{N}{2}}k^2 \approx \frac{8\pi^2 \Delta F^2 N}{\sigma^2} \frac{N^3}{12},$$
+We know that Bandwidth of OFDM is $\Delta F.N$, hence $(\Delta F . N)^2$ can be considered as Squared Bandwidth. Also We have considered $|S[k]|^2 = 1$, which will mean Pre-Correlation Signal Power is 1. If instead Pre-Correlation Signal Power was a constant $P$, then Post-Correlation signal power would have been $N.P$. And then the Fisher Information expression becomes :
+$$\mathbf{J}(\tau) = \frac{2\pi^2 (\Delta F.N)^2}{3}. \frac{N^2 P}{\sigma^2} = N. \frac{2\pi^2}{3} (\Delta F.N)^2 SNR_{corr}$$
+\end{document}
