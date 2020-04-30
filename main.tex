@@ -15,8 +15,8 @@
 \begin{document}
 
 \maketitle
-
-\section{Derivation: Fisher Information}
+\section{CRLB for OFDM Based Systems}
+\subsection{Derivation: Fisher Information}
 $s(t)$ is the OFDM wave being transmitted by Reference Cell. $\tau$ is the time delay and channel is assumed to be $1$. Received Samples can be given by the following :$$y[n] = s(nT_s - \tau) + z[n],$$where z[n] are iid AWGN noise samples with mean $0$ and variance $\sigma^2$.  
 Joint Conditional PDF of $\mathbf y|\tau$ can be given by the following:
 $$p(\mathbf y|\tau) = \frac{1}{(\pi \sigma^2)^N} .exp(-\frac{1}{\sigma^2}\sum^{N}_{n=1}(s(n T_s - \tau) - y[n])^2)$$
@@ -47,8 +47,21 @@ $$\mathbf{J}(\tau) = \frac{8\pi^2 \Delta F^2 N}{\sigma^2}\sum^{\frac{N}{2} - 1}_
 We know that Bandwidth of OFDM is $\Delta F.N$, hence $(\Delta F . N)^2$ can be considered as Squared Bandwidth. Also We have considered $|S[k]|^2 = 1$, which will mean Pre-Correlation Signal Power is 1. If instead Pre-Correlation Signal Power was a constant $P$, then Post-Correlation signal power would have been $N.P$. And then the Fisher Information expression becomes :
 $$\mathbf{J}(\tau) = \frac{2\pi^2 (\Delta F.N)^2}{3}. \frac{N^2 P}{\sigma^2} = N. \frac{2\pi^2}{3} (\Delta F.N)^2 SNR_{corr}$$
 
-\section{CRLB : Expression}
+\subsection{CRLB : Expression}
 As, CRLB on uncertainty of the estimated parameter $\tau$ is lower bounded by reciprocal of Fisher Information, CRLB can be given by following:
 $$var(\hat{\tau}) \ge \frac{1}{\mathbf J(\tau)},$$
 $$or, var(\hat{\tau}) \ge \frac{3}{2N\pi^2}\frac{1}{(\Delta F.N)^2}.\frac{1}{SNR_{corr}}$$
+
+\section{PRS Based New CRLB Calculation}
+\subsection{Introduction : OFDM Waveform Structure}
+Assume $x[n] = \sqrt{\frac{2C}{N_c}}\sum_{k \in N_a}p_k.d_k.e^{j2\pi n k/N_c}$, where $C$ is the power in the bandpass signal, $p_k^2$ is relative power weight of $k^{th}$ tone, $d_k$ is Gold-sequence Symbol on $k^{th}$ tone and $N_c$ is number of sub-carriers. $p_k^2$ is constrained by $\sum_{k \in N_a}p_k^2 = N_c$, so that the nominal signal power is $C$.
+
+\subsection{CRLB Analysis : General Range Estimation in AWGN}
+Now if we go by the analysis of Range estimation given in 'Fundamentals of Statistical Signal processing: Estimation Theory',Steven M Kay, then, CRLB for estimator $\hat{\tau}$ will be given by the following:
+$$var(\hat{\tau}) \ge CRLB(\tau) = \frac{1}{\frac{E_s}{N_o/2}\cdot \bar{F}^2},$$
+Here, $E_s = C\cdot T_s$, is signal Energy and $\frac{N_o}{2}$ is Noise Energy, which makes $E_s/(N_o/2)$ as SNR, and $\bar{F}^2$ is Gabor's Bandwidth or Mean Squared bandwidth. This mean Squared Bandwidth for OFDM is defined as the following:
+$$\bar{F}^2 = \frac{\int^{\infty}_{-\infty}(2\pi f)^2 \left|X(f)\right|^2\cdot df}{\int^{\infty}_{-\infty}\left|X(f)\right|^2\cdot df}$$
+
+\subsection{CRLB Derivation : Pilot Based OFDM System}
+
 \end{document}
