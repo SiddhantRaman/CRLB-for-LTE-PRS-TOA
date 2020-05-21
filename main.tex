@@ -1,5 +1,6 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
+\usepackage{amsmath}
 \usepackage{geometry}
  \geometry{
  a4paper,
@@ -10,7 +11,7 @@
 
 \title{3GPP LTE : Cramer Rao Lower Bound on TOA}
 \author{Siddhant}
-\date{April 2020}
+\date{May 2020}
 
 \begin{document}
 
@@ -75,7 +76,7 @@ $$var(\hat{\tau}) \ge \frac{\sigma^2}{\frac{4\pi^2}{3}(N\Delta f)^2 \cdot \sum^{
 Notice that the quantity $\frac{\sum_{k}|d_k|^2}{\sigma^2}$ is the Post-Correlation SNR. Because, when we correlate the received symbols with the Gold Sequence of PRS, what we will have as aggregate signal energy, is : $\sum_{k}|d_k|^2$, and we know that noise energy in the total OFDM Bandwidth $2B = 12N_{RB}\Delta f$ is nothing but $\sigma^2 = N_0/2.2B = N_0B$, where $N_0$ is double sided noise PSD. So, we can write $\mathbf{SNR}_{PostCorr} = \frac{\sum_{k}|d_k|^2}{\sigma^2}$ and then our final result can be given by:
 \begin{equation} \label{eq7}
 \large
-var(\hat{\tau}) \ge \frac{1}{\frac{4\pi^2}{3} \ (N\Delta f)^2 \ \mathbf{SNR}_{PostCorr}} 
+\boxed{CRLB(\hat{\tau}) = var(\hat{\tau}) \ge \frac{1}{\frac{4\pi^2}{3} \ (N\Delta f)^2 \ \mathbf{SNR}_{PostCorr}} }
 \end{equation}
 
 \newpage
@@ -132,7 +133,7 @@ $$\mathbf I(\theta) = \frac{1}{\sigma^2}\sum^{N-1}_{n=0}(\frac{\partial s[n;\the
 Cramer Rao Lower bound on estimation of unknown parameter $\theta$ is given by the reciprocal of Fisher information $\mathbf{I}(\theta)$, so in this case of general signal parametrized by unknown component $\theta$ is given as follows:
 \begin{equation} \label{eqA}
 \large
-var(\hat{\theta}) \ge \frac{\sigma^2}{ \sum^{N-1}_{n=0} (\frac{\partial s[n;\theta]}{\partial \theta} )^2}
+\boxed {var(\hat{\theta}) \ge \frac{\sigma^2}{ \sum^{N-1}_{n=0} (\frac{\partial s[n;\theta]}{\partial \theta} )^2}}
 \end{equation}
 
 \newpage
