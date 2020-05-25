@@ -34,21 +34,21 @@ Based on the final result of appendix $\mathbf{A}$, Cramer-Rao Lower Bound for d
 $$
 var(\hat{\tau_0}) \ge \frac{\sigma^2}{\sum^{n_0+N-1}_{n=n_0}(\frac{\partial s[n\Delta - \tau_0]}{\partial \tau_0 })^2} = \frac{\sigma^2}{\sum^{n_0+N-1}_{n=n_0}(\frac{\partial s(t)}{\partial t})| ^2 _{t=n\Delta - \tau_0}}
 $$
-\\
+
 \begin{equation} \label{eq1}
 \LARGE
 \boxed{var(\hat{\tau_0}) \ge \frac{\sigma^2}{\sum^{N-1}_{n=0}(\frac{\partial s(t)}{\partial t})| ^2 _{t=n\Delta}}}
 \end{equation}
 \\
 The summation in the equ.(1) can be approximated to be integration since $\Delta$ is assumed to be very small and $n_0\Delta = \tau_0$. 
-\begin{equation} \label{eq2} \large
-var(\hat{\tau_0}) \ge \frac{\sigma^2}{\frac{1}{\Delta} \int^{T_s}_{0}(\frac{\partial s(t)}{\partial t})^2 \partial t} = \frac{\Delta. \sigma^2}{\int^{T_s}_{0}(\frac{\partial s(t)}{\partial t})^2 \partial t}
+\begin{equation} \label{eq2} \LARGE
+var(\hat{\tau_0}) \ge \frac{\sigma^2}{\frac{1}{\Delta} \int^{T_s}_{0}(\frac{\partial s(t)}{\partial t})^2 \partial t} = \boxed{\frac{\Delta. \sigma^2}{\int^{T_s}_{0}(\frac{\partial s(t)}{\partial t})^2 \partial t}}
 \end{equation}
-\\
+
 \begin{equation} \label{eq3} \LARGE
 \boxed{var(\hat{\tau_0}) \ge \frac{N_0/2}{\int^{T_s}_{0}(\frac{\partial s(t)}{\partial t})^2 \partial t}}
 \end{equation}
-\\
+
 Observe that signal energy $\mathcal E = \int^{T_s}_{0}|s(t)|^2\partial t$ and define a quantity $\bar{F}^2$ as follows:
 $$\bar{F}^2 = \frac{\int^{T_s}_{0}(\frac{\partial s(t)}{\partial t})^2 \partial t}{\int^{T_s}_{0}|s(t)|^2\partial t}$$
 \\
@@ -63,6 +63,7 @@ This quantity $\bar{F}^2$ can be understood as Mean-Squared Bandwidth \footnote{
 \boxed{\bar{F}^2 = \frac{\int^{\infty}_{-\infty}(2\pi f)^2|S(f)|^2\partial f}{\int^{\infty}_{-\infty}|S(f)|^2\partial f}}
 \end{equation}
 \\
+
 \subsection{CRLB Derivation : PRS Based OFDM System}
 A transmitted signal $s[n]$ can be written as inverse discrete fourier transform summation as follows:
 $$s[n] = \sqrt{\frac{2C}{N}} \sum_{k \in N_a}d_k exp(j2\pi n k/N)$$
@@ -88,11 +89,11 @@ If we can assume that $d_k$ will be one of the QAM symbols picked from the set: 
 \\
 Using equ.(2) and equ.(8), we can write the CRLB for TOA for PRS based OFDM system as follows:
 \\
-$$var(\hat{\tau}) \ge \frac{(N\Delta f)\sigma^2}{\frac{4\pi^2}{3}(N\Delta f)^2 \cdot \sum^{N-1}_{k=0}|X[k\Delta f]|^2}$$ 
+$$var(\hat{\tau}) \ge \frac{\sigma^2/(N\Delta f)}{\frac{4\pi^2}{3}(N\Delta f)^2 \cdot \sum^{N-1}_{k=0}|X[k\Delta f]|^2}$$ 
 \\
-$$ var(\hat{\tau}) \ge \frac{(N\Delta f)\sigma^2}{\frac{4\pi^2}{3}(N\Delta f)^2 \cdot \sum^{N-1}_{k=0}|d_k|^2} = \frac{1}{\frac{4\pi^2}{3}(N\Delta f)^2 \cdot \frac{\sum_{k}|d_k|^2}{(N\Delta f)\sigma^2}}$$
+$$ var(\hat{\tau}) \ge \frac{\sigma^2/(N\Delta f)}{\frac{4\pi^2}{3}(N\Delta f)^2 \cdot \sum^{N-1}_{k=0}|d_k|^2} = \frac{1}{\frac{4\pi^2}{3}(N\Delta f)^2 \cdot \frac{\sum_{k}|d_k|^2}{\sigma^2/(N\Delta f)}}$$
 \\
-Notice that the quantity $\frac{\sum_{k}|d_k|^2}{(N\Delta f)\sigma^2}$ is the Post-Correlation SNR. Because, when we correlate the received symbols with the Gold Sequence of PRS, what we will have as aggregate signal energy, is : $\sum_{k}|d_k|^2$, and we know that noise power in the total OFDM Bandwidth $2B = 12N_{RB}\Delta f$ is nothing but $(N\Delta f)\sigma^2 = N_0/2.2B = N_0B$, where $N_0/2$ is double sided noise PSD. So, we can write $\frac{\sum_{k}|d_k|^2}{(N\Delta f)\sigma^2} = {SNR}_{PostCorr}$. We can also interpret the quantity, $\frac{\sum_{k}|d_k|^2}{N\Delta f}$ as post-correlation signal PSD(/Hz) and $\sigma^2 = N_0/2$ is the Noise PSD(/Hz), and hence, $\frac{\sum_{k}|d_k|^2}{(N\Delta f)\sigma^2} = {SNR}_{PostCorr}$  . The final CRLB expression for this PRS(Pilot) based delay estimation in OFDM Based 4GLTE or 5GNR system can be given by the following:
+Notice that the quantity $\frac{\sum_{k}|d_k|^2}{\sigma^2/(N\Delta f)}$ is the Post-Correlation SNR. Because, when we correlate the received symbols with the Gold Sequence of PRS, what we will have as aggregate signal energy, is : $\sum_{k}|d_k|^2$, and we know that noise power in the total OFDM Bandwidth $2B = 12N_{RB}\Delta f$ is nothing but $\sigma^2 = N_0/2.2B = N_0B$, where $N_0/2$ is double sided noise PSD. Hence, $\sigma^2/(N\Delta f)$ is Noise-Energy. So, we can write $\frac{\sum_{k}|d_k|^2}{\sigma^2/(N\Delta f)} = {SNR}_{PostCorr}$. We can also interpret the quantity, $\frac{\sum_{k}|d_k|^2}{1/(N\Delta f)}$ as post-correlation signal power and $\sigma^2 = N_0/2$ is the Noise Power, and hence, $\frac{\sum_{k}|d_k|^2}{\sigma^2/(N\Delta f)} = {SNR}_{PostCorr}$  . The final CRLB expression for this PRS(Pilot) based delay estimation in OFDM Based 4GLTE or 5GNR system can be given by the following:
 \\
 \begin{equation} \label{eq9}
 \LARGE
